@@ -1,0 +1,70 @@
+mongo
+cd /home/project/fullstack_developer_capstone1/server/database
+docker build . -t nodeapp
+docker-compose down
+docker-compose up
+
+*Consultar datos a través de "Mongoose API"
+https://hectorccolla-3030.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai
+https://hectorccolla-3030.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/fetchDealers
+https://hectorccolla-3030.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/fetchDealer/2
+https://hectorccolla-3030.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/fetchReviews/dealer/29
+https://hectorccolla-3030.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/get_cars
+
+*Cargar datos
+cd /home/project/fullstack_developer_capstone1/server
+pip install virtualenv
+virtualenv djangoenv
+source djangoenv/bin/activate
+
+python3 -m pip install -U -r requirements.txt
+
+python3 manage.py makemigrations
+python3 manage.py migrate
+
+python3 manage.py migrate --run-syncdb
+
+*Crear usuario:
+python3 manage.py createsuperuser
+
+-----------------------------------------------
+
+Backend
+cd /home/project/fullstack_developer_capstone1/server
+python3 manage.py runserver
+
+https://hectorccolla-8000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/djangoapp/get_dealers/
+https://hectorccolla-8000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/djangoapp/get_dealers/Kansas
+https://hectorccolla-8000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/djangoapp/dealer/1
+https://hectorccolla-8000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/djangoapp/reviews/dealer/29
+https://hectorccolla-8000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/djangoapp/get_cars/
+
+-----------------------------------------------
+
+Frontend
+cd /home/project/fullstack_developer_capstone1/server/frontend
+npm install
+npm run build
+
+https://hectorccolla-8000.theianext-1-labs-prod-misc-tools-us-east-0.proxy.cognitiveclass.ai
+
+-----------------------------------------------
+
+Serverless
+cd /home/project/fullstack_developer_capstone1/server/djangoapp/microservices
+docker build . -t us.icr.io/${SN_ICR_NAMESPACE}/senti_analyzer
+docker push us.icr.io/${SN_ICR_NAMESPACE}/senti_analyzer
+ibmcloud ce application create --name sentianalyzer --image us.icr.io/${SN_ICR_NAMESPACE}/senti_analyzer --registry-secret icr-secret --port 5000
+
+URL Generada:
+https://sentianalyzer.1q7q123xms53.us-south.codeengine.appdomain.cloud
+
+-----------------------------------------------
+
+K8S
+kubectl get deployments
+kubectl delete deployment dealership
+kubectl get pods
+
+cd /home/project/fullstack_developer_capstone1/server
+kubectl apply -f deployment.yaml
